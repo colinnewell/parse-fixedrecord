@@ -126,6 +126,7 @@ sub column {
             is     => 'ro',
             %pars,
             ));
+    #warn "Adding field to $caller";
     $caller->add_field($attr);
 }
 

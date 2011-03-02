@@ -49,15 +49,21 @@ use overload q("") => sub { $_[0]->output };
 subtype 'My::MMA' =>
     as class_type('Moose::Meta::Attribute');
 
-class_has fields => (
-    metaclass => 'Collection::Array',
-    default   => sub { [] },
-    is        => 'rw',
-    isa       => 'ArrayRef[Str|My::MMA]',
-    provides  => {
-        push => 'add_field',
-        },
-    );
+our %fields;
+sub add_field {
+    my $self = shift;
+    push @{$fields{$self}}, shift;
+}
+
+#class_has fields => (
+#    traits    => ['Array'],
+#    default   => sub { [] },
+#    is        => 'rw',
+#    isa       => 'ArrayRef[Str|My::MMA]',
+#    handles  => {
+#        'add_field' => 'push',
+#        },
+#    );
 
 subtype 'Date' =>
     as class_type('DateTime');
@@ -90,17 +96,37 @@ sub parse {
     my ($self, $string) = @_;
     my $class = ref $self || $self;
 
-    my @ranges = @{ $class->fields };
+    #my @ranges = @{ $class->fields };
 
+    #warn "Ranges for class $class\n";
+    #use Data::Dumper;
+    #warn Dumper $fields{$class};
+    #warn "  ".$_->name."\n" foreach @{$fields{$class}};
+
+    #warn "Attributes for class $class\n";
+    #warn "  ".$_->name."\n" foreach $class->meta->get_all_attributes;
+    
+    # Using class attributes seems to fail here... all of the loaded classes
+    # attributes appear to be stored in the same array ref, i.e. there is no
+    # separation between them.
+    
+    #my @ranges = $class->meta->get_all_attributes;
+    my @ranges = @{$fields{$class}};
+    
     my $pos = 0;
     my %data = map {
         if (ref) {
             # it's an attribute
-            my $width = $_->width;
-            my $name  = $_->name;
+            my $width    = $_->width;
+            my $name     = $_->name;
+            my $optional = $_->optional;
             my $value = substr($string, $pos, $width);
             $pos += $width;
-            ($name => $value);
+            if ($optional && $value !~ /\S/) {
+                ();
+            } else {
+                ($name => $value);
+            }
         } else {
             # it's a string
             my $width = length;

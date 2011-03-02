@@ -8,6 +8,11 @@ has width => (
     isa       => 'Int',
     );
 
+has optional => (
+    is        => 'ro',
+    isa       => 'Bool',
+);
+
 sub Moose::Meta::Attribute::Custom::Trait::Column::register_implementation { 
     'Parse::FixedRecord::Column' 
 };
