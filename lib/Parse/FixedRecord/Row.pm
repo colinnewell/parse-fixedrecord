@@ -55,16 +55,6 @@ sub add_field {
     push @{$fields{$self}}, shift;
 }
 
-#class_has fields => (
-#    traits    => ['Array'],
-#    default   => sub { [] },
-#    is        => 'rw',
-#    isa       => 'ArrayRef[Str|My::MMA]',
-#    handles  => {
-#        'add_field' => 'push',
-#        },
-#    );
-
 subtype 'Date' =>
     as class_type('DateTime');
 
@@ -96,21 +86,6 @@ sub parse {
     my ($self, $string) = @_;
     my $class = ref $self || $self;
 
-    #my @ranges = @{ $class->fields };
-
-    #warn "Ranges for class $class\n";
-    #use Data::Dumper;
-    #warn Dumper $fields{$class};
-    #warn "  ".$_->name."\n" foreach @{$fields{$class}};
-
-    #warn "Attributes for class $class\n";
-    #warn "  ".$_->name."\n" foreach $class->meta->get_all_attributes;
-    
-    # Using class attributes seems to fail here... all of the loaded classes
-    # attributes appear to be stored in the same array ref, i.e. there is no
-    # separation between them.
-    
-    #my @ranges = $class->meta->get_all_attributes;
     my @ranges = @{$fields{$class}};
     
     my $pos = 0;
