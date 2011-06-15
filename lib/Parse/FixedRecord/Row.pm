@@ -127,7 +127,14 @@ sub output {
     my $string = join '', map {
         if (ref) {
             my $width = $_->width;
-            sprintf "\%${width}s", $_->get_value($self);
+            my $optional = $_->optional;
+            my $value = $_->get_value($self);
+            if ($optional && !defined $value)
+            {
+                "";
+            } else {
+                sprintf "\%${width}s", $value;
+            }
         } else {
             $_
         }} @ranges;
