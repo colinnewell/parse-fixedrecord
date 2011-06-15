@@ -28,6 +28,9 @@ Provides stringified output.  This is overloaded, so you can just:
 to get an output (in the same format as declared/parsed).  This depends
 on each individual parser type having well behaved String overloading!
 
+Note that this will only work in a sane fashion with optional fields
+if the fields are at the end of the row.
+
 =head2 Types
 
 ::Row declares C<Duration> and C<DateTime> types for you to use in your

@@ -88,9 +88,9 @@ It is possible to declare columns as optional.
 
 If an optional column is encountered and it doesn't contain any non whitespace 
 data it will not be filled in on the object.  These mostly make sense in terms
-of adding optional fields that can appear at the end of the field, although
-as implied a sometimes blank field in the middle could be marked optional to
-prevent it being filled with whitespace.
+of adding optional fields that can appear at the end of the record.  Especially
+if you want to do a round trip with the records.  The Row output function will
+only work in a sane fashion with optional fields that appear at the end.
 
 =head2 Parsing
 
