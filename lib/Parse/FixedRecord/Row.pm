@@ -11,6 +11,10 @@ Provides the C<parse> implementation.
 
 =head2 Methods
 
+=head3 C<add_field>
+
+Method used internally by the Parse::FixedRecord class to add a field.
+
 =head3 C<parse>
 
 See L<Parse::FixedRecord> for usage;

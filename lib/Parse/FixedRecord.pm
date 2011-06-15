@@ -80,6 +80,18 @@ and in any case, there is no requirement to use it.
 i.e. the record consists of two 5-char wide fields, split by the literal 
 C<' | '>.
 
+=head3 C<optional>
+
+It is possible to declare columns as optional.
+
+  column style_code   => width => 12, isa => 'Int', optional => 1;
+
+If an optional column is encountered and it doesn't contain any non whitespace 
+data it will not be filled in on the object.  These mostly make sense in terms
+of adding optional fields that can appear at the end of the field, although
+as implied a sometimes blank field in the middle could be marked optional to
+prevent it being filled with whitespace.
+
 =head2 Parsing
 
 =head3 C<$parser-E<gt>parse>
@@ -126,7 +138,6 @@ sub column {
             is     => 'ro',
             %pars,
             ));
-    #warn "Adding field to $caller";
     $caller->add_field($attr);
 }
 
