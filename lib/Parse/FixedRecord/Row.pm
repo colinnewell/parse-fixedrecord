@@ -116,8 +116,9 @@ sub parse {
 
 sub output {
     my ($self) = @_;
+    my $class = ref $self || $self;
 
-    my @ranges = @{ $self->fields };
+    my @ranges = @{$fields{$class}};
 
     my $string = join '', map {
         if (ref) {
