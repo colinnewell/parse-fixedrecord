@@ -23,7 +23,9 @@ t/00-load.t
 t/01-basic.t
 t/02-error.t
 t/03-table.t
+t/04-optional.t
 t/boilerplate.t
 t/lib/Row/Test.pm
+t/lib/Row/TestOptional.pm
 t/pod-coverage.t
 t/pod.t
