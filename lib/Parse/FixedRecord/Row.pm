@@ -136,21 +136,24 @@ sub parse {
         }
         } @ranges;
 
-    return $class->new( %data );
+    #return $class->new( %data );
+    return \%data;
 }
 
 sub output {
     my ($self) = @_;
 
-    my @ranges = @{ $self->fields };
-
+    my $class  = ref $self || $self;
+    my @ranges = @{$fields{$class}};
+    
     my $string = join '', map {
         if (ref) {
-            my $width = $_->width;
-            sprintf "\%${width}s", $_->get_value($self);
+            my $width = $_->width || 0;
+            sprintf "\%${width}s", $_->get_value($self) || '';
         } else {
             $_
         }} @ranges;
+    
     return $string;
 }
 
