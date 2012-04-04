@@ -19,6 +19,10 @@ Method used internally by the Parse::FixedRecord class to add a field.
 
 See L<Parse::FixedRecord> for usage;
 
+=head3 C<parse_raw>
+
+See L<Parse::FixedRecord> for usage;
+
 =head3 C<output>
 
 Provides stringified output.  This is overloaded, so you can just:
@@ -57,6 +61,7 @@ subtype 'My::MMA' =>
     as class_type('Moose::Meta::Attribute');
 
 our %fields;
+
 sub add_field {
     my $self = shift;
     push @{$fields{$self}}, shift;
@@ -91,8 +96,15 @@ coerce 'Duration'
 
 sub parse {
     my ($self, $string) = @_;
+    my $data = $self->parse_raw($string);
     my $class = ref $self || $self;
+    return $class->new( %$data );
+}
 
+sub parse_raw {
+    my ($self, $string) = @_;
+
+    my $class = ref $self || $self;
     my @ranges = @{$fields{$class}};
     
     my $pos = 0;

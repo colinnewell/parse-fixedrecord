@@ -103,6 +103,14 @@ type constraints and object inflations, then a Moose object is returned.
 
 Otherwise, an error is thrown, usually by the Moose type constraint failure.
 
+=head3 C<$parser-E<gt>parse_raw>
+
+  my $obj = My::Parser->parse_raw( $line );
+
+This simply parses the line and returns a hash, it does not perform
+and type conversions or type validation.  For when you have a lot
+of data and not a lot of time.  Try parse first.
+
 =cut
 
 use Moose ();

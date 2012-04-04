@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 use strict; use warnings;
-use Test::More tests => 13;
+use Test::More tests => 15;
 use FindBin '$Bin';
 
 use lib "$Bin/lib";
@@ -40,3 +40,9 @@ my $expected = $test_data;
 
 is $obj->output, $test_data, 'Round trip output (explicit picture)';
 is ''.$obj,      $test_data, '... with overloading';
+
+my $href = Row::Test->parse( $test_data );
+
+is $href->{first}, 'Fred';
+is $href->{date}, '2009-03-17';
+
