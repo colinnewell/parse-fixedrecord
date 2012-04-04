@@ -118,7 +118,8 @@ sub parse {
         }
         } @ranges;
 
-    return $class->new( %data );
+    #return $class->new( %data );
+    return \%data;
 }
 
 sub output {
@@ -141,6 +142,7 @@ sub output {
         } else {
             $_
         }} @ranges;
+    
     return $string;
 }
 
